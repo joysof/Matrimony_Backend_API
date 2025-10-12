@@ -34,7 +34,7 @@ const queryUsers = async (filter, options) => {
     }
   }
 
-    const limit = parseInt(options.limit) || 10;
+  const limit = parseInt(options.limit) || 10;
   const page = parseInt(options.page) || 1;
   const skip = (page - 1) * limit;
   const sort = options.sortBy ? { [options.sortBy]: 1 } : { createdAt: -1 };
@@ -55,7 +55,33 @@ const queryUsers = async (filter, options) => {
   };
 };
 
+const getUsers = async (filter, options, user) => {
+  const query = {isDeleted: false, isEmailVerified: true};
 
+  if(user.gender === "male"){
+    query.gender = "female";
+  } else if (user.gender === "female") {
+    query.gender = "male";
+  }else {
+    query.gender = "other";
+  }
+
+  for (const key of Object.keys(filter)) {
+    if (
+      (key === "fullName" || key === "email" || key === "gender" || key === "height" || key === "country" || key === "city" || key === "residentialStatus" || key === "education" || key === "workExperience" || key === "occupation" || key === "religion" || key === "motherTongue") &&
+      filter[key] !== ""
+    ) {
+      query[key] = { $regex: filter[key], $options: "i" };
+    } else if (filter[key] !== "") {
+      query[key] = filter[key];
+    }
+  }
+
+  const users = await User.paginate(query, options);
+
+
+  return users;
+};
 
 const getUserById = async (id) => {
   return User.findById(id);
@@ -128,5 +154,6 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
-  isUpdateUser
+  isUpdateUser,
+  getUsers
 };

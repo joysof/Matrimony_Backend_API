@@ -19,17 +19,12 @@ const createUser = catchAsync(async (req, res) => {
 });
 
 const getUsers = catchAsync(async (req, res) => {
-  const currentUser = await userService.getUserById(req.user.id);
-  const filter = pick(req.query, ["name", "role", "gender"]);
+
+const filter = pick(req.query, ["fullName", "email", "gender", "height", "country", "city", "residentialStatus", "education", "workExperience", "occupation", "religion", "motherTongue"]);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
   
-  if (currentUser.gender === "male") {
-    filter.gender = "female";
-  } else if (currentUser.gender === "female") {
-    filter.gender = "male";
-  }
-    filter._id = { $ne: currentUser._id };
-  const result = await userService.queryUsers(filter, options);
+
+  const result = await userService.getUsers(filter, options , req.user);
   res.status(httpStatus.OK).json(
     response({
       message: "All Users",
