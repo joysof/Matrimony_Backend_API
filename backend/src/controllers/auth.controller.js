@@ -115,13 +115,6 @@ const forgotPassword = catchAsync(async (req, res) => {
       "No users found with this email"
     );
   }
-  // if(user.oneTimeCode === 'verified'){
-  //   throw new ApiError(
-  //     httpStatus.BAD_REQUEST,
-  //     "try 3 minute later"
-  //   );
-  // }
-  // Generate OTC (One-Time Code)
   const oneTimeCode =
     Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
 

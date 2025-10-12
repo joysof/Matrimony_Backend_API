@@ -93,12 +93,6 @@ const verifyEmail = async (reqBody, reqQuery) => {
   console.log("reqQuery", oneTimeCode);
   const user = await userService.getUserByEmail(email);
   
-  // if(user.oneTimeCode === 'verified'){
-  //   throw new ApiError(
-  //     httpStatus.BAD_REQUEST,
-  //     "try 3 minute later"
-  //   );
-  // }
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "User does not exist");
   } else if (user.oneTimeCode === null) {

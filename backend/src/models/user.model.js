@@ -4,8 +4,7 @@ const bcrypt = require("bcryptjs");
 const { toJSON, paginate } = require("./plugins");
 const { roles } = require("../config/roles");
 
-const userSchema = mongoose.Schema(
-  {
+const userSchema = mongoose.Schema(  {
     firstName: {
       type: String,
       required: false,
@@ -60,37 +59,98 @@ const userSchema = mongoose.Schema(
     callingCode: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     phoneNumber: {
       type: Number,
       required: false,
-      default: null
+      default: null,
     },
     nidNumber: {
       type: Number,
       required: false,
-      default: null
+      default: null,
     },
     isNIDVerified: {
       type: Boolean,
       default: false,
-      default: null
+      default: null,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    height: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    residentialStatus: {
+      type: String,
+      required: false,
+    },
+    education: {
+      type: String,
+      required: true,
+    },
+    workExperience: {
+      type: String,
+      required: true,
+    },
+    occupation: {
+      type: String,
+      required: true,
+    },
+    income: {
+      type: Object,
+      required: false,
+    },
+    occupation: {
+      type: String,
+      required: true,
+    },
+    maritalStatus: {
+      type: String,
+      required: true,
+    },
+    motherTongue: {
+      type: String,
+      required: true,
+    },
+    religion: {
+      type: String,
+      required: true,
+    },
+    sect: {
+      type: String,
+      required: true,
+    },
+    caste: {
+      type: String,
+      required: true,
     },
     dataOfBirth: {
       type: Date,
       required: false,
-      default: null
+      default: null,
     },
+
     address: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     oneTimeCode: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     isEmailVerified: {
       type: Boolean,
@@ -104,14 +164,15 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    fcmToken: { // onlly use for firebase push notification / mobile focus*
+    fcmToken: {
+      
       type: String,
       required: false,
       default: null,
     },
     isDeleted: {
       type: Boolean,
-      default: false
+      default: false,
     },
 
     securitySettings: {
@@ -138,7 +199,13 @@ const userSchema = mongoose.Schema(
         required: function () {
           return !!this.securityQuestion;
         },
-        set: (answer) => (answer ? require("crypto").createHash("sha256").update(answer).digest("hex") : null),
+        set: (answer) =>
+          answer
+            ? require("crypto")
+                .createHash("sha256")
+                .update(answer)
+                .digest("hex")
+            : null,
         select: false,
         default: null,
       },
@@ -148,6 +215,7 @@ const userSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
 
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
