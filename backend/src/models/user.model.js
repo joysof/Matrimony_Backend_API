@@ -1,10 +1,11 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
-const { toJSON, paginate } = require("./plugins");
-const { roles } = require("../config/roles");
+const mongoose = require('mongoose')
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
+const { toJSON, paginate } = require('./plugins')
+const { roles } = require('../config/roles')
 
-const userSchema = mongoose.Schema(  {
+const userSchema = mongoose.Schema(
+  {
     firstName: {
       type: String,
       required: false,
@@ -29,14 +30,14 @@ const userSchema = mongoose.Schema(  {
       lowercase: true,
       validate(value) {
         if (!validator.isEmail(value)) {
-          throw new Error("Invalid email");
+          throw new Error('Invalid email')
         }
       },
     },
     image: {
       type: String,
-      required: [true, "Image is must be Required"],
-      default: "/uploads/users/user.png",
+      required: [true, 'Image is must be Required'],
+      default: '/uploads/users/user.png',
     },
     password: {
       type: String,
@@ -46,8 +47,8 @@ const userSchema = mongoose.Schema(  {
       validate(value) {
         if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
           throw new Error(
-            "Password must contain at least one letter and one number"
-          );
+            'Password must contain at least one letter and one number'
+          )
         }
       },
       private: true,
@@ -165,7 +166,6 @@ const userSchema = mongoose.Schema(  {
       default: false,
     },
     fcmToken: {
-      
       type: String,
       required: false,
       default: null,
@@ -180,13 +180,13 @@ const userSchema = mongoose.Schema(  {
         type: String,
         lowercase: true,
         trim: true,
-        match: [/^\S+@\S+\.\S+$/, "Invalid email format"],
+        match: [/^\S+@\S+\.\S+$/, 'Invalid email format'],
         default: null,
       },
       recoveryPhone: {
         type: String,
         trim: true,
-        match: [/^\+?[1-9]\d{1,14}$/, "Invalid phone number format"],
+        match: [/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format'],
         default: null,
       },
       securityQuestion: {
@@ -197,14 +197,14 @@ const userSchema = mongoose.Schema(  {
       securityAnswer: {
         type: String,
         required: function () {
-          return !!this.securityQuestion;
+          return !!this.securityQuestion
         },
         set: (answer) =>
           answer
-            ? require("crypto")
-                .createHash("sha256")
+            ? require('crypto')
+                .createHash('sha256')
                 .update(answer)
-                .digest("hex")
+                .digest('hex')
             : null,
         select: false,
         default: null,
@@ -214,38 +214,40 @@ const userSchema = mongoose.Schema(  {
   {
     timestamps: true,
   }
-);
-
+)
 
 // add plugin that converts mongoose to json
-userSchema.plugin(toJSON);
-userSchema.plugin(paginate);
+userSchema.plugin(toJSON)
+userSchema.plugin(paginate)
 
 userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
-  const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
-  return !!user;
-};
+  const user = await this.findOne({ email, _id: { $ne: excludeUserId } })
+  return !!user
+}
 userSchema.statics.isPhoneNumberTaken = async function (
   phoneNumber,
   excludeUserId
 ) {
-  const user = await this.findOne({ phoneNumber, _id: { $ne: excludeUserId } });
-  return !!user;
-};
+  const user = await this.findOne({ phoneNumber, _id: { $ne: excludeUserId } })
+  return !!user
+}
 
 userSchema.methods.isPasswordMatch = async function (password) {
-  const user = this;
-  return bcrypt.compare(password, user.password);
-};
+  const user = this
+  return bcrypt.compare(password, user.password)
+}
 
-userSchema.pre("save", async function (next) {
-  const user = this;
-  if (user.isModified("password")) {
-    user.password = await bcrypt.hash(user.password, 8);
+userSchema.pre('save', async function (next) {
+  const user = this
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 8)
   }
-  next();
-});
+  if (user.isModified('gender') && user.gender) {
+    user.gender = user.gender.toLowerCase()
+  }
+  next()
+})
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema)
 
-module.exports = User;
+module.exports = User

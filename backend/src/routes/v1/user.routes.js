@@ -23,6 +23,7 @@ router
     userController.updateProfile
   );
 
+  router.route("/").get(auth("common"), userController.getUsers);
   
 
 module.exports = router;

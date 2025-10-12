@@ -34,11 +34,25 @@ const queryUsers = async (filter, options) => {
     }
   }
 
-  const users = await User.paginate(query, options);
+    const limit = parseInt(options.limit) || 10;
+  const page = parseInt(options.page) || 1;
+  const skip = (page - 1) * limit;
+  const sort = options.sortBy ? { [options.sortBy]: 1 } : { createdAt: -1 };
 
-  // Convert height and age to feet/inches here...
+  const users = await User.find(query)
+    .sort(sort)
+    .skip(skip)
+    .limit(limit)
+    .select("-password -__v"); // password hide
 
-  return users;
+  const total = await User.countDocuments(query);
+
+  return {
+    total,
+    page,
+    limit,
+    users,
+  };
 };
 
 
