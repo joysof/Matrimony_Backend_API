@@ -8,9 +8,9 @@ const createSubcription = async(subcriptionBody) =>{
 }
 
 
-const getAllSubcription = async (filter , options) =>{
+const getSubcriptions = async (filter , options) =>{
   const query = { status: "active" };
-  for(const key of object.key(filter)){
+  for(const key of Object.keys(filter)){
     if(filter[key] !== ''){
         query[key] = {$regex : filter[key] , $option : "i"}
     }
@@ -41,5 +41,6 @@ const getAllSubcription = async (filter , options) =>{
 
 
 module.exports ={
-    createSubcription , getAllSubcription
+    createSubcription ,
+     getSubcriptions
 }

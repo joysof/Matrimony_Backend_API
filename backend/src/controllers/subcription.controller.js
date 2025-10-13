@@ -17,8 +17,26 @@ const createSubcription = catchAsync(async(req,res) =>{
     )
 })
 
+const getSubcriptions = catchAsync(async(req,res) =>{
+    const filter = req.query || {}
+    const options = {
+        limit : req.query.limit,
+        page : req.query.page,
+        sortBy : req.query.sortBy
+    }
+    const result = await subcriptionService.getSubcriptions(filter , options)
 
+    res.status(httpStatus.OK).json(
+        response({
+            message : "All Subcription",
+            status: "Ok",
+            statusCode : httpStatus.OK,
+            data :result
+        })
+    )
+})
 
 module.exports = {
-    createSubcription
+    createSubcription,
+    getSubcriptions
 }

@@ -1,10 +1,10 @@
 const express = require('express')
-const { createSubcription } = require('../../controllers/subcription.controller')
+const { createSubcription, getSubcriptions } = require('../../controllers/subcription.controller')
 
 const subcriptionRoutes = express.Router()
 
 subcriptionRoutes.post('/create' , createSubcription)
-
+subcriptionRoutes.get('/all' , getSubcriptions)
 
 
 
