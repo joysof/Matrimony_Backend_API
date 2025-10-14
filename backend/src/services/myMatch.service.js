@@ -24,6 +24,7 @@ const createMatch = async(userId , profileId) =>{
 
 const acceptMatch = async(matchId , userId) =>{
     const match = await myMatch.findById(matchId)
+    console.log('accept' , match)
     if (!match) {
         throw new ApiError(httpStatus.NOT_FOUND , "Match not found")
     }
@@ -31,6 +32,21 @@ const acceptMatch = async(matchId , userId) =>{
         throw new ApiError(httpStatus.FORBIDDEN , "you cannot accept this match")
     }
     match.status = "accepted"
+    await match.save()
+    return match
+}
+
+const rejectMatch = async (matchId , userId)=>{
+    
+    const match = await myMatch.findById(matchId)
+
+    if(!match){
+        throw new ApiError(httpStatus.NOT_FOUND , "Match not found")
+    }
+    if(match.profileId.toString() !== userId.toString()){
+        throw new ApiError(httpStatus.FORBIDDEN , "you cannot reject this match")
+    }
+    match.status = "rejected"
     await match.save()
     return match
 }
@@ -50,5 +66,7 @@ const acceptMatch = async(matchId , userId) =>{
 
 module.exports ={
     createMatch,
-    acceptMatch
+    acceptMatch,
+    rejectMatch,
+   
 }

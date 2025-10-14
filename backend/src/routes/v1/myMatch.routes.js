@@ -5,6 +5,7 @@ const myMatchRoute = express.Router()
 
 myMatchRoute.post('/' , auth() ,myMatchController.createMatch )
 myMatchRoute.patch('/:matchId/accept' ,auth() , myMatchController.acceptMatch)
+myMatchRoute.patch('/:matchId/reject' ,auth() , myMatchController.rejectMatch)
 
 
 module.exports = myMatchRoute

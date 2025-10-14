@@ -36,6 +36,27 @@ const acceptMatch = catchAsync(async(req,res) =>{
     )
 })
 
+const rejectMatch = catchAsync(async(req,res) =>{
+    console.log(req.params)
+    console.log(req.user.id)
+    console.log('upp')
+    const userId = req.user.id
+    const {matchId} = req.params
+    console.log('medel')
+    const match = await myMatchService.rejectMatch(matchId,userId)
+    console.log('bottom')
+    console.log("match controller" , match)
+
+    res.status(httpStatus.OK).json(
+        response({
+            message : "match rejected" ,
+            status: "Ok",
+            statusCode:httpStatus.OK,
+            data:match
+        })
+    )
+})
+
 
 
 
@@ -44,5 +65,7 @@ const acceptMatch = catchAsync(async(req,res) =>{
 
 module.exports = {
     createMatch,
-    acceptMatch
+    acceptMatch,
+    rejectMatch,
+    
 }
