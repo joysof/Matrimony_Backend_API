@@ -22,7 +22,18 @@ const createMatch = async(userId , profileId) =>{
     return match
 }
 
-
+const acceptMatch = async(matchId , userId) =>{
+    const match = await myMatch.findById(matchId)
+    if (!match) {
+        throw new ApiError(httpStatus.NOT_FOUND , "Match not found")
+    }
+    if(match.profileId.toString() !== userId.toString() ){
+        throw new ApiError(httpStatus.FORBIDDEN , "you cannot accept this match")
+    }
+    match.status = "accepted"
+    await match.save()
+    return match
+}
 
 
 
@@ -38,5 +49,6 @@ const createMatch = async(userId , profileId) =>{
 
 
 module.exports ={
-    createMatch
+    createMatch,
+    acceptMatch
 }

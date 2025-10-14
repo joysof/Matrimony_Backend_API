@@ -20,6 +20,21 @@ const createMatch = catchAsync(async(req , res) =>{
     )
 })
 
+const acceptMatch = catchAsync(async(req,res) =>{
+    const userId =req.user.id
+    const {matchId} = req.params
+
+    const match = await myMatchService.acceptMatch(matchId , userId)
+
+    res.status(httpStatus.OK).json(
+        response({
+            message : "match accepted",
+            status : "OK" ,
+            statusCode: httpStatus.OK,
+            data:match
+        })
+    )
+})
 
 
 
@@ -28,5 +43,6 @@ const createMatch = catchAsync(async(req , res) =>{
 
 
 module.exports = {
-    createMatch
+    createMatch,
+    acceptMatch
 }
