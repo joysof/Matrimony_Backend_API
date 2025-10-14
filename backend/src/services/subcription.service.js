@@ -33,14 +33,18 @@ const getSubcriptions = async (filter , options) =>{
     limit,
     subcriptions
   }
-
-
-
-
 }
 
+const getSubcriptionById = async(id) =>{
+  const subcription = await Subcription.findById(id)
+  if (!subcription) {
+    throw new ApiError(httpStatus.NOT_FOUND , "subcription not found")
+  }
+  return subcription
+}
 
 module.exports ={
     createSubcription ,
-     getSubcriptions
+     getSubcriptions,
+     getSubcriptionById
 }

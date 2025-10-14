@@ -36,7 +36,20 @@ const getSubcriptions = catchAsync(async(req,res) =>{
     )
 })
 
+const getSubcription = catchAsync(async (req,res) =>{
+    const subcription = await subcriptionService.getSubcriptionById(req.params.id,req.body)
+    res.status(httpStatus.OK).json(
+        response({
+            message: "subcription",
+            status: "Ok",
+            statusCode:httpStatus.OK,
+            data:subcription
+        })
+    )
+})
+
 module.exports = {
     createSubcription,
-    getSubcriptions
+    getSubcriptions,
+    getSubcription
 }
