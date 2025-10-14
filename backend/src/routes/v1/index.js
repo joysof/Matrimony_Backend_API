@@ -5,6 +5,7 @@ const userRoute = require("./user.routes");
 const docsRoute = require("./docs.routes");
 const subcriptionRoutes = require("./subcription.routes");
 const mySubcriptionRoute = require("./mySubctiption.routes");
+const myMatchRoute = require("./myMatch.routes");
 
 
 const router = express.Router();
@@ -25,6 +26,10 @@ const defaultRoutes = [
   {
     path: "/mySubcription",
     route: mySubcriptionRoute,
+  },
+  {
+    path: "/myMatch",
+    route: myMatchRoute,
   },
  
 ];
