@@ -45,6 +45,10 @@ const mySubcriptionSchema = mongoose.Schema({
         type: Number,
         required:true,
         default: 0
+    },
+    isActive :{
+        type:Boolean,
+        default: false
     }
 })
 
