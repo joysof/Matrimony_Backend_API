@@ -43,8 +43,16 @@ const getSubcriptionById = async(id) =>{
   return subcription
 }
 
+const updateSubcription = async (id , updateBody) =>{
+  const subcription = await getSubcriptionById(id)
+  Object.assign(subcription , updateBody)
+  await subcription.save()
+  return subcription;
+}
+
 module.exports ={
     createSubcription ,
      getSubcriptions,
-     getSubcriptionById
+     getSubcriptionById,
+     updateSubcription
 }

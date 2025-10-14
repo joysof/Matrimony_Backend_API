@@ -3,6 +3,7 @@ const {
   createSubcription,
   getSubcriptions,
   getSubcription,
+  updateSubcription,
 } = require('../../controllers/subcription.controller')
 
 const subcriptionRoutes = express.Router()
@@ -10,5 +11,6 @@ const subcriptionRoutes = express.Router()
 subcriptionRoutes.post('/create', createSubcription)
 subcriptionRoutes.get('/all', getSubcriptions)
 subcriptionRoutes.get('/:id', getSubcription)
+subcriptionRoutes.put('/:id' , updateSubcription)
 
 module.exports = subcriptionRoutes
