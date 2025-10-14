@@ -48,9 +48,27 @@ const getMySubctiptions = async(userId) =>{
     return subcriptions
 }
 
+const getMySubctiption = async (id , userId) =>{
+    console.log(userId)
+    console.log("id" , id)
+    const mysub = await mySubcription.findOne({
+        _id : id,
+        userId,
+       
+    })
+    .populate("subcriptionId")
+    .populate("userId")
+
+    if (!mysub) {
+        throw new ApiError(httpStatus.NOT_FOUND , "Subsctiption not found")
+    }
+    return mysub
+}
+
 
 
 module.exports = {
     getMySubctiptions,
-    buySubcription
+    buySubcription,
+    getMySubctiption
 }
