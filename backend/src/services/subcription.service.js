@@ -50,9 +50,14 @@ const updateSubcription = async (id , updateBody) =>{
   return subcription;
 }
 
+const deleteSubcription = async (id) =>{
+  const subcription = await Subcription.findByIdAndDelete(id)
+  return subcription
+}
 module.exports ={
     createSubcription ,
      getSubcriptions,
      getSubcriptionById,
-     updateSubcription
+     updateSubcription,
+     deleteSubcription
 }

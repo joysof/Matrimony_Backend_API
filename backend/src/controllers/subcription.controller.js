@@ -61,9 +61,22 @@ const updateSubcription = catchAsync(async (req,res) =>{
     )
 })
 
+
+const deleteSubcription = catchAsync(async(req,res) =>{
+    const subcription = await subcriptionService.deleteSubcription(req.params.id)
+    res.status(httpStatus.OK).json(
+        response({
+            message : "Subcription Delete",
+            status : "ok",
+            statusCode :httpStatus.OK,
+            data: {}
+        })
+    )
+})
 module.exports = {
     createSubcription,
     getSubcriptions,
     getSubcription,
-    updateSubcription
+    updateSubcription,
+    deleteSubcription
 }
