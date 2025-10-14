@@ -57,7 +57,18 @@ const rejectMatch = catchAsync(async(req,res) =>{
     )
 })
 
-
+const getMyMatches = catchAsync(async(req,res) =>{
+    const userId = req.user.id
+    const mathes = await myMatchService.getMyMatches(userId)
+      res.status(httpStatus.OK).json(
+    response({
+      message: "All Matches",
+      status: "OK",
+      statusCode: httpStatus.OK,
+      data:mathes,
+    })
+  );
+})
 
 
 
@@ -67,5 +78,5 @@ module.exports = {
     createMatch,
     acceptMatch,
     rejectMatch,
-    
+    getMyMatches
 }

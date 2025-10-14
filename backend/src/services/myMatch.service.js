@@ -51,7 +51,13 @@ const rejectMatch = async (matchId , userId)=>{
     return match
 }
 
-
+const getMyMatches = async(userId) =>{
+    return myMatch.find({
+        $or:[{userId} ,{profileId : userId} ]
+    })
+    .populate("userId" , "fullName email")
+    .populate("profileId" , "fullName email")
+}
 
 
 
@@ -68,5 +74,5 @@ module.exports ={
     createMatch,
     acceptMatch,
     rejectMatch,
-   
+    getMyMatches
 }
