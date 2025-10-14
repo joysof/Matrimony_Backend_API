@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose')
 
 const subscriptionSchema = mongoose.Schema(
@@ -15,6 +16,7 @@ const subscriptionSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+  
     days: {
       type: Number,
       required: true,
@@ -27,6 +29,10 @@ const subscriptionSchema = mongoose.Schema(
       type: String,
       enum: ['active', 'inactive'],
       default: 'active',
+    },
+    isDeleted:{
+      type:Boolean,
+      default:false
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,

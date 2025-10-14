@@ -9,7 +9,9 @@ const createSubcription = async(subcriptionBody) =>{
 
 
 const getSubcriptions = async (filter , options) =>{
-  const query = { status: "active" };
+
+  const query = {isDeleted : false, status: "active" };
+
   for(const key of Object.keys(filter)){
     if(filter[key] !== ''){
         query[key] = {$regex : filter[key] , $option : "i"}
@@ -37,9 +39,10 @@ const getSubcriptions = async (filter , options) =>{
 
 const getSubcriptionById = async(id) =>{
   const subcription = await Subcription.findById(id)
-  if (!subcription) {
+  if (!subcription || subcription.isDeleted) {
     throw new ApiError(httpStatus.NOT_FOUND , "subcription not found")
   }
+
   return subcription
 }
 
@@ -51,7 +54,13 @@ const updateSubcription = async (id , updateBody) =>{
 }
 
 const deleteSubcription = async (id) =>{
-  const subcription = await Subcription.findByIdAndDelete(id)
+  const subcription = await getSubcriptionById(id)
+  if(!subcription){
+    throw new ApiError(httpStatus.NOT_FOUND , "subcription not found")
+  }
+  subcription.isDeleted = true;
+  subcription.status = "inactive";
+  await subcription.save()
   return subcription
 }
 module.exports ={
