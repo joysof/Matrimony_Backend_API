@@ -1,12 +1,12 @@
 const express = require('express')
-const { getMySubctiptions, buySubcription, getMySubctiption } = require('../../controllers/mySubcription.controller')
+const mySubcriptionController = require('../../controllers/mySubcription.controller')
 const auth  = require('../../middlewares/auth')
 
 const mySubcriptionRoute= express.Router()
 
-mySubcriptionRoute.get('/all',auth(),getMySubctiptions)
-mySubcriptionRoute.post('/buy' , auth() , buySubcription)
-mySubcriptionRoute.get('/:id' , auth() , getMySubctiption)
+mySubcriptionRoute.get('/all',auth(),mySubcriptionController.getMySubctiptions)
+mySubcriptionRoute.post('/buy' , auth() , mySubcriptionController.buySubcription)
+mySubcriptionRoute.get('/:id' , auth() , mySubcriptionController.getMySubctiption)
 
 
 module.exports = mySubcriptionRoute

@@ -2,7 +2,7 @@ module.exports.Token = require('./token.model');
 module.exports.User = require('./user.model');
 module.exports.Subcription = require('./subcription.model')
 module.exports.mySubcription = require('./mySubcription.model')
-
+module.exports.myMatch = require('./myMatches.models')
 
 
 
