@@ -37,9 +37,23 @@ const unBlockUser = catchAsync(async(req,res) =>{
     )
 })
 
+const getBlockUsers = catchAsync(async (req,res) =>{
+    const userId = req.user.id
+    const data = await blcokUserService.getBlockUsers(userId)
+
+    res.status(httpStatus.OK).json(
+        response({
+            message: "Blocked users list",
+            status: "Ok",
+            statusCode: httpStatus.OK,
+            data
+        })
+    )
+})
 
 
 module.exports ={
     blockUser,
-    unBlockUser
+    unBlockUser,
+    getBlockUsers
 }

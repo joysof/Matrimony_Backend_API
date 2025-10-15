@@ -5,6 +5,7 @@ const {userService} = require('../services')
 
 
 const addBlock = async(userId , profileId) =>{
+
     if(userId.toString() === profileId.toString()){
         throw new ApiError(httpStatus.BAD_REQUEST , "You cannot block yourself")
     }
@@ -25,7 +26,7 @@ const addBlock = async(userId , profileId) =>{
 
 const unBlockUser = async (userId , profileId) =>{
 
-    
+
     const block = await blockUser.findOne({userId ,profileId})
 
     if (!block) {
@@ -38,9 +39,14 @@ const unBlockUser = async (userId , profileId) =>{
     return {message : "User unBlocked successfully"}
 }   
 
+const getBlockUsers= async(userId) =>{
+    return blockUser.find({userId})
+    .populate("profileId" , "fullName email , image")
+}
 
 
 module.exports={
     addBlock,
-    unBlockUser
+    unBlockUser,
+    getBlockUsers
 }
