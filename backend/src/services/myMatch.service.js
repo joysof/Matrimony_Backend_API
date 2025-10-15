@@ -12,7 +12,14 @@ const createMatch = async (userId, profileId) => {
   if (!profile) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Profile not found')
   }
-  const existingMatch = await myMatch.findOne({ userId, profileId })
+ const existingMatch = await myMatch.findOne({
+    $or : [
+      {userId,profileId},
+      {userId:profileId , profileId:userId}
+    ]
+  })
+
+
   if (existingMatch) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
