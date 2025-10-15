@@ -7,6 +7,7 @@ const subcriptionRoutes = require("./subcription.routes");
 const mySubcriptionRoute = require("./mySubctiption.routes");
 const myMatchRoute = require("./myMatch.routes");
 const blockUserRoute = require("./blockUser.routes");
+const notInterestedRoute = require("./notInterested.routes");
 
 
 const router = express.Router();
@@ -35,6 +36,10 @@ const defaultRoutes = [
   {
     path: "/blockUser",
     route: blockUserRoute,
+  },
+  {
+    path: "/notInterested",
+    route: notInterestedRoute,
   },
  
 ];

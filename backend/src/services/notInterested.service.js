@@ -1,6 +1,6 @@
 const httpStatus = require('http-status')
 const ApiError = require('../utils/ApiError')
-const {notInterested , User, notInterested} = require('../models')
+const {notInterested} = require('../models')
 const { getUserById } = require('./user.service')
 
 
@@ -16,13 +16,13 @@ const createNotInterested= async(userId , profileId)=>{
     }
 
     const alreadyNotInterested = await notInterested.findOne({userId,profileId})
-    if (!alreadyNotInterested) {
+    if (alreadyNotInterested) {
         throw new ApiError(httpStatus.BAD_REQUEST ,"Already select Not interested")
     }
 
-    const notInterested = await notInterested.create({userId ,profileId})
+    const notInrer = await notInterested.create({userId ,profileId})
 
-    return notInterested
+    return notInrer
 }
 
 
