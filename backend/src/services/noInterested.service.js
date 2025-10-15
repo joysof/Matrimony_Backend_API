@@ -1,0 +1,32 @@
+const httpStatus = require('http-status')
+const ApiError = require('../utils/ApiError')
+const {notInterested , User, notInterested} = require('../models')
+const { getUserById } = require('./user.service')
+
+
+
+const createNotInterested= async(userId , profileId)=>{
+    if(userId.toString() === profileId.toString()){
+        throw new ApiError(httpStatus.BAD_REQUEST,"You cannot make yoursefl as a notInterested")
+    }
+
+    const profile = await getUserById(profileId)
+    if(!profile){
+        throw new ApiError(httpStatus.NOT_FOUND ,"user not found")
+    }
+
+    const alreadyNotInterested = await notInterested.findOne({userId,profileId})
+    if (!alreadyNotInterested) {
+        throw new ApiError(httpStatus.BAD_REQUEST ,"Already select Not interested")
+    }
+
+    const notInterested = await notInterested.create({userId ,profileId})
+
+    return notInterested
+}
+
+
+
+module.exports = {
+    createNotInterested
+}

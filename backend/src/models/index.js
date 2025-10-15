@@ -4,7 +4,7 @@ module.exports.Subcription = require('./subcription.model')
 module.exports.mySubcription = require('./mySubcription.model')
 module.exports.myMatch = require('./myMatches.models')
 module.exports.blockUser = require('./block.model')
-
+module.exports.notInterested = require('./notInterested.model')
 
 
 
