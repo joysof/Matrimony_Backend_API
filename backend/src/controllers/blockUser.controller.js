@@ -20,9 +20,26 @@ const blockUser = catchAsync(async(req,res) =>{
     )
 })
 
+const unBlockUser = catchAsync(async(req,res) =>{
+    const userId = req.user.id
+    const {profileId} = req.body
+
+    const data = await blcokUserService.unBlockUser(userId , profileId)
+
+    res.status(httpStatus.OK).json(
+        response(
+            {
+                message : data.message,
+                status:'Ok',
+                statusCode:httpStatus.OK
+            }
+        )
+    )
+})
 
 
 
 module.exports ={
-    blockUser
+    blockUser,
+    unBlockUser
 }

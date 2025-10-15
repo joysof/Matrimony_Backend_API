@@ -5,7 +5,8 @@ const {blockUserController} = require('../../controllers')
 const blockUserRoute = express.Router()
 
 
-blockUserRoute.post('/' , auth(),blockUserController.blockUser)
+blockUserRoute.post('/addBlock' , auth(),blockUserController.blockUser)
+blockUserRoute.post('/unBlock', auth() , blockUserController.unBlockUser)
 
 
 module.exports = blockUserRoute
