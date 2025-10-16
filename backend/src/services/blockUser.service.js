@@ -4,6 +4,7 @@ const {blockUser, User} = require('../models')
 const {userService} = require('../services')
 
 
+
 const addBlock = async(userId , profileId) =>{
 
     if(userId.toString() === profileId.toString()){
@@ -41,12 +42,22 @@ const unBlockUser = async (userId , profileId) =>{
 
 const getBlockUsers= async(userId) =>{
     return blockUser.find({userId})
-    .populate("profileId" , "fullName email , image")
+    .populate("profileId")
 }
 
+const findIsBlocked = async(userId , profileId) =>{
+    const isBlocked = await blockUser.find({
+        $or:[
+            {userId , profileId},
+            {userId:profileId , profileId:userId}
+        ]
+    })
+    return isBlocked
+}
 
 module.exports={
     addBlock,
     unBlockUser,
-    getBlockUsers
+    getBlockUsers,
+    findIsBlocked
 }
