@@ -8,6 +8,7 @@ const shortListedProfileRoute = express.Router()
 
 shortListedProfileRoute.post('/' , auth() , shortListProfileController.addShortListProfile)
 shortListedProfileRoute.get('/' , auth() , shortListProfileController.getShortListProfiles)
+shortListedProfileRoute.delete('/:profileId' , auth() , shortListProfileController.removeShortListProfile)
 
 
 module.exports = shortListedProfileRoute

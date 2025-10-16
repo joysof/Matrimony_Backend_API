@@ -39,7 +39,16 @@ const getShortListProfiles = async (userId)=>{
     .sort({createAt : -1})
 }
 
+const removeShortListProfile = async(userId , profileId) =>{
+    const shortList = await shortListedProfile.findOneAndDelete({userId, profileId})
+    if (!shortList) {
+        throw new ApiError(httpStatus.NOT_FOUND , "shortListed profile not found")
+    }
+    return shortList
+}
+
 module.exports = {
     addShortListProfile,
-    getShortListProfiles
+    getShortListProfiles,
+    removeShortListProfile
 }

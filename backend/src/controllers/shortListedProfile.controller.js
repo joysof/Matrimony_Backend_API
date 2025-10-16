@@ -33,8 +33,23 @@ const getShortListProfiles = catchAsync(async(req,res)=>{
     )
 })
 
+const removeShortListProfile= catchAsync(async(req,res) =>{
+    const userId = req.user.id 
+    const profileId = req.params.profileId
+    const data = await shortListedProfileService.removeShortListProfile(userId , profileId)
+
+    res.status(httpStatus.OK).json(
+        response({
+            message : "profile remove from shortList",
+            status: "Ok",
+            statusCode:httpStatus.OK,
+            data
+        })
+    )
+})
 
 module.exports ={
     addShortListProfile,
-    getShortListProfiles
+    getShortListProfiles,
+    removeShortListProfile
 }
