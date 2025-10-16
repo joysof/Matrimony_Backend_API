@@ -33,6 +33,13 @@ const addShortListProfile = async(userId , profileId)=>{
    return shortlist
 }
 
+const getShortListProfiles = async (userId)=>{
+   return shortListedProfile.find({userId})
+    .populate("profileId")
+    .sort({createAt : -1})
+}
+
 module.exports = {
     addShortListProfile,
+    getShortListProfiles
 }

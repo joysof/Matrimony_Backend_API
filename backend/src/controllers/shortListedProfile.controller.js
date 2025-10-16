@@ -4,6 +4,7 @@ const response = require('../config/response')
 const {shortListedProfileService} = require('../services')
 
 
+
 const addShortListProfile=catchAsync(async(req ,res) =>{
     const userId = req.user.id 
     const profileId = req.body.profileId
@@ -19,8 +20,21 @@ const addShortListProfile=catchAsync(async(req ,res) =>{
     )
 })
 
+const getShortListProfiles = catchAsync(async(req,res)=>{
+    const userId = req.user.id 
+    const data = await shortListedProfileService.getShortListProfiles(userId)
+    res.status(httpStatus.OK).json(
+        response({
+            message: "Your short List profile",
+            status: "Ok",
+            statusCode:httpStatus.OK,
+            data
+        })
+    )
+})
 
 
 module.exports ={
-    addShortListProfile
+    addShortListProfile,
+    getShortListProfiles
 }
