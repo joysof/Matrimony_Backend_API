@@ -25,8 +25,21 @@ const createNotInterested= async(userId , profileId)=>{
     return notInrer
 }
 
+const getNotInteresteds = async(userId) =>{
+    const notInrersted = await  notInterested.find({userId})
+    if (!notInrersted) {
+        throw new ApiError(httpStatus.BAD_REQUEST , "Your notInterest is  empty")
+    }
+    return notInrersted
+    .populate("profileId")
+    .sort({createAt: -1})
+}
+
+
 
 
 module.exports = {
-    createNotInterested
+    createNotInterested,
+    getNotInteresteds,
+    
 }

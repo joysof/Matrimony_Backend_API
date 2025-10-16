@@ -21,6 +21,26 @@ const createNotInterested = catchAsync(async(req,res) =>{
 })
 
 
+const getNotInteresteds = catchAsync(async(req,res) =>{
+    const userId = req.user.id
+    const profileId = req.params.profileId
+    const data = await notInterestedService.getNotInteresteds(userId,profileId)
+    
+    res.status(httpstatus.OK).json(
+        response({
+            message : "Not Intersted Profiles",
+            status:"OK",
+            statusCode:httpstatus.OK,
+            data,
+        })
+    )
+
+})
+
+
+
 module.exports ={
-    createNotInterested
+    createNotInterested,
+    getNotInteresteds,
+    
 }
