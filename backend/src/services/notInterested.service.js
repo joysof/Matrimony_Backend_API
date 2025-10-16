@@ -26,20 +26,28 @@ const createNotInterested= async(userId , profileId)=>{
 }
 
 const getNotInteresteds = async(userId) =>{
-    const notInrersted = await  notInterested.find({userId})
-    if (!notInrersted) {
-        throw new ApiError(httpStatus.BAD_REQUEST , "Your notInterest is  empty")
-    }
-    return notInrersted
-    .populate("profileId")
-    .sort({createAt: -1})
+    const notInterestedList = await notInterested
+  .find({ userId })
+  .populate("profileId")
+  .sort({ createdAt: -1 });
+
+  return notInterestedList
 }
 
 
+const removeNotInterested = async(userId , profileId)=>{
+
+    const removeNotInter = await notInterested.findOneAndDelete({userId,profileId})
+    if(!removeNotInter){
+        throw new ApiError(httpStatus.NOT_FOUND, "Not interested profile not found")
+    }
+
+    return removeNotInter
+}
 
 
 module.exports = {
     createNotInterested,
     getNotInteresteds,
-    
+    removeNotInterested
 }
