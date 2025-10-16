@@ -8,6 +8,7 @@ const mySubcriptionRoute = require("./mySubctiption.routes");
 const myMatchRoute = require("./myMatch.routes");
 const blockUserRoute = require("./blockUser.routes");
 const notInterestedRoute = require("./notInterested.routes");
+const shortListedProfileRoute = require("./shortListedProfile.routes");
 
 
 const router = express.Router();
@@ -40,6 +41,10 @@ const defaultRoutes = [
   {
     path: "/notInterested",
     route: notInterestedRoute,
+  },
+  {
+    path: "/shortListProfile",
+    route:shortListedProfileRoute,
   },
  
 ];
