@@ -4,8 +4,9 @@ const httpStatus = require('http-status')
 
 
 const buySubcription = async (userId , subcriptionId) =>{
-    console.log(subcriptionId)
+    
     const subcription = await Subcription.findById(subcriptionId)
+    
     if (!subcription) {
         throw new ApiError(httpStatus.NOT_FOUND , "subcription not found")
     }

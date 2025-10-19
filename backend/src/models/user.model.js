@@ -210,6 +210,43 @@ const userSchema = mongoose.Schema(
         default: null,
       },
     },
+    MetchRequestCredit: {
+      type: Number,
+      default: 4,
+    },
+    interestRequestCredit: {
+      type: Number,
+      default: 3,
+    },
+    subscription :{
+      subscriptionId : {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Subscription"
+      },
+      subscriptionExpirationDate : {
+        type : Date,
+        required :false,
+        default : null
+      },
+      status :{
+        type:String,
+        enum : [
+          "active",
+          "past_due",
+          "canceled",
+          "unpaid",
+          "incomplete",
+          "incomplete_expired",
+          "trialing" ,
+          "paused"
+        ],
+        default : "trialing"
+      },
+      isSubscriptionTaken : {
+        type:Boolean,
+        default : false
+      }
+    }
   },
   {
     timestamps: true,
