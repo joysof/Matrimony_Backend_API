@@ -15,13 +15,15 @@ const mySubcriptionSchema = mongoose.Schema({
         ref:'User',
         required: true
     },
-    expiresDate :{
+    subscriptionExpirationDate :{
         type: Date,
-        required:true
+        required:true,
+        
     },
     name:{
         type:String,
-        requried:true
+        requried:true,
+        trim:true
     },
     duration:{
         type:String,
@@ -44,7 +46,7 @@ const mySubcriptionSchema = mongoose.Schema({
     matchesMessageLimit:{
         type: Number,
         required:true,
-        default: 0
+        default: 4
     },
     isActive :{
         type:Boolean,
