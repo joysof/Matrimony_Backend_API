@@ -6,8 +6,7 @@ module.exports.myMatch = require('./myMatches.models')
 module.exports.blockUser = require('./block.model')
 module.exports.notInterested = require('./notInterested.model')
 module.exports.shortListedProfile = require('./shortListedProfile.model')
-
-
+module.exports.Payment = require('./payment.model')
 
 
 
