@@ -21,10 +21,6 @@ const subscriptionSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    feature: {
-      type: [String],
-      default: [],
-    },
     status: {
       type: String,
       enum: ['active', 'inactive'],
