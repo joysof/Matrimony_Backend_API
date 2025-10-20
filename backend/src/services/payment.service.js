@@ -22,7 +22,7 @@ const createStripeSession = async (userId , subName , price) =>{
                     product_data :{
                         name : `${subName} Subscription`
                     },
-                    unit_amount : price + 100
+                    unit_amount : price * 100
                 },
                 quantity : 1
             }
@@ -38,7 +38,33 @@ const createStripeSession = async (userId , subName , price) =>{
     })
     return session.url
 }
+const verifyStripePayment = async(sessionId)=>{
+    if (!sessionId) {
+        throw new ApiError(httpStatus.BAD_REQUEST , "session ID  missing")
+    }
+    const session = await stripe.checkout.sessions.retrieve(sessionId)
+    if (!session) {
+        throw new ApiError(httpStatus.NOT_FOUND , 'stripe session not found')
+    }
+    if(session.payment_status === 'paid'){
+        const updated = await Payment.findOneAndUpdate(
+            {sessionId},
+            {paymentStatus : 'paid'},
+            {new : true}
+        )
+        if (!updated) {
+            throw new ApiError(httpStatus.NOT_FOUND , 'Payment recoed not found ')
+        }
+        return updated
+    }else{
+        return {message : "payment not completed yet"}
+    }
+    
+}
+
+
 
 module.exports ={
-    createStripeSession
+    createStripeSession,
+    verifyStripePayment
 }
