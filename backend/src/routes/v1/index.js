@@ -9,6 +9,7 @@ const myMatchRoute = require("./myMatch.routes");
 const blockUserRoute = require("./blockUser.routes");
 const notInterestedRoute = require("./notInterested.routes");
 const shortListedProfileRoute = require("./shortListedProfile.routes");
+const paymentRoute = require("./payment.routes");
 
 
 const router = express.Router();
@@ -45,6 +46,10 @@ const defaultRoutes = [
   {
     path: "/shortListProfile",
     route:shortListedProfileRoute,
+  },
+  {
+    path: "/payment",
+    route:paymentRoute,
   },
  
 ];

@@ -5,7 +5,11 @@ const httpStatus = require('http-status')
 const ApiError = require('../utils/ApiError')
 
 const createStripeSession = async (userId , subName , price) =>{
-    if (userId || subName || price) {
+    console.log('service file ' , userId)
+    if (!userId) {
+        throw new ApiError(httpStatus.NOT_FOUND,"Not Authrize login agin")
+    }
+    if (!subName || !price) {
         throw new ApiError(httpStatus.NOT_FOUND , "some data messing tray agin")        
     }
     const session = await stripe.checkout.sessions.create({
